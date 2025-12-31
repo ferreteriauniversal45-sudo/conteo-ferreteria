@@ -1,5 +1,5 @@
 body {
-    font-family: system-ui, -apple-system, Arial, sans-serif;
+    font-family: system-ui, Arial, sans-serif;
     margin: 0;
     background: #f4f6f8;
 }
@@ -10,23 +10,13 @@ body {
     padding: 12px;
 }
 
-h2 {
-    margin-bottom: 8px;
-}
-
-h3 {
-    margin-top: 20px;
-    margin-bottom: 6px;
-}
-
-input[type="text"],
-input[type="number"] {
+input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     margin-bottom: 8px;
-    border: 1px solid #ccc;
     border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 .panel {
@@ -37,9 +27,8 @@ input[type="number"] {
 
 button {
     padding: 8px 14px;
-    font-size: 14px;
-    border: none;
     border-radius: 6px;
+    border: none;
     cursor: pointer;
     background: #1976d2;
     color: white;
@@ -51,11 +40,6 @@ button.secondary {
 
 button.danger {
     background: #d32f2f;
-}
-
-button.small {
-    padding: 6px 10px;
-    font-size: 14px;
 }
 
 .lista {
@@ -74,10 +58,6 @@ button.small {
     align-items: center;
 }
 
-.item:last-child {
-    border-bottom: none;
-}
-
 .codigo {
     font-weight: bold;
 }
@@ -87,13 +67,20 @@ button.small {
     color: #666;
 }
 
-.controles {
-    display: flex;
+/* MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
 }
 
-input.cantidad {
-    width: 70px;
-    text-align: center;
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
 }
