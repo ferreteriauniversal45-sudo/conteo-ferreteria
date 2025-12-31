@@ -1,4 +1,4 @@
-let catalogo = [];
+let catalogo = {};
 let conteo = JSON.parse(localStorage.getItem("conteo")) || {};
 
 fetch("catalogo.json")
@@ -16,18 +16,22 @@ function renderCatalogo() {
     const contenedor = document.getElementById("catalogo");
     contenedor.innerHTML = "";
 
-    catalogo
-        .filter(p =>
-            p.codigo.toLowerCase().includes(q) ||
-            p.nombre.toLowerCase().includes(q)
+    Object.entries(catalogo)
+        .filter(([codigo, p]) =>
+            codigo.toLowerCase().includes(q) ||
+            p.producto.toLowerCase().includes(q) ||
+            p.departamento.toLowerCase().includes(q)
         )
         .slice(0, 50)
-        .forEach(p => {
+        .forEach(([codigo, p]) => {
             const div = document.createElement("div");
             div.className = "item";
             div.innerHTML = `
-                <span>${p.codigo} - ${p.nombre}</span>
-                <button onclick="sumar('${p.codigo}')">+</button>
+                <span>
+                    <strong>${codigo}</strong> - ${p.producto}
+                    <br><small>${p.departamento}</small>
+                </span>
+                <button onclick="sumar('${codigo}')">+</button>
             `;
             contenedor.appendChild(div);
         });
@@ -37,14 +41,17 @@ function renderConteo() {
     const contenedor = document.getElementById("conteo");
     contenedor.innerHTML = "";
 
-    Object.values(conteo).forEach(item => {
+    Object.entries(conteo).forEach(([codigo, item]) => {
         const div = document.createElement("div");
         div.className = "item";
         div.innerHTML = `
-            <span>${item.codigo} - ${item.nombre} (${item.cantidad})</span>
+            <span>
+                <strong>${codigo}</strong> - ${item.producto}
+                <br>Cantidad: ${item.cantidad}
+            </span>
             <div class="controles">
-                <button onclick="restar('${item.codigo}')">-</button>
-                <button onclick="sumar('${item.codigo}')">+</button>
+                <button onclick="restar('${codigo}')">-</button>
+                <button onclick="sumar('${codigo}')">+</button>
             </div>
         `;
         contenedor.appendChild(div);
@@ -52,9 +59,13 @@ function renderConteo() {
 }
 
 function sumar(codigo) {
-    const p = catalogo.find(x => x.codigo === codigo);
     if (!conteo[codigo]) {
-        conteo[codigo] = { ...p, cantidad: 0 };
+        const p = catalogo[codigo];
+        conteo[codigo] = {
+            producto: p.producto,
+            departamento: p.departamento,
+            cantidad: 0
+        };
     }
     conteo[codigo].cantidad++;
     guardar();
@@ -80,13 +91,17 @@ function limpiarConteo() {
 
 function exportarExcel() {
     const data = [
-        ["Código", "Producto", "Cantidad"],
-        ...Object.values(conteo).map(i => [
-            i.codigo,
-            i.nombre,
-            i.cantidad
-        ])
+        ["Código", "Producto", "Departamento", "Cantidad"]
     ];
+
+    Object.entries(conteo).forEach(([codigo, i]) => {
+        data.push([
+            codigo,
+            i.producto,
+            i.departamento,
+            i.cantidad
+        ]);
+    });
 
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.aoa_to_sheet(data);
