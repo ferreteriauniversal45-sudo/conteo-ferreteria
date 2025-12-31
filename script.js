@@ -138,5 +138,19 @@ function exportarExcel() {
         "Registro"
     );
 
-    XLSX.writeFile(wb, `conteo_${new Date().toISOString().slice(0,10)}.xlsx`);
+    // 🔑 GENERAR BASE64 (NO blob)
+    const base64 = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "base64"
+    });
+
+    const nombre = `conteo_${new Date().toISOString().slice(0,10)}.xlsx`;
+
+    // 👉 ENVIAR A ANDROID
+    if (window.Android && Android.guardarExcel) {
+        Android.guardarExcel(base64, nombre);
+    } else {
+        alert("Exportación no disponible en este dispositivo");
+    }
 }
+
