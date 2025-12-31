@@ -1,48 +1,99 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 10px;
+    font-family: system-ui, -apple-system, Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f8;
 }
 
-h2, h3 {
-    margin: 10px 0;
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 12px;
 }
 
-input {
+h2 {
+    margin-bottom: 8px;
+}
+
+h3 {
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
 .panel {
-    margin: 10px 0;
     display: flex;
     gap: 10px;
+    margin-bottom: 10px;
 }
 
 button {
-    padding: 10px;
+    padding: 8px 14px;
     font-size: 14px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    background: #1976d2;
+    color: white;
+}
+
+button.secondary {
+    background: #757575;
+}
+
+button.danger {
+    background: #d32f2f;
+}
+
+button.small {
+    padding: 6px 10px;
+    font-size: 14px;
 }
 
 .lista {
-    border: 1px solid #ccc;
-    max-height: 220px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    max-height: 260px;
     overflow-y: auto;
 }
 
 .item {
-    padding: 8px;
+    padding: 10px;
     border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.item:hover {
-    background: #f5f5f5;
+.item:last-child {
+    border-bottom: none;
 }
 
-.controles button {
-    margin-left: 5px;
+.codigo {
+    font-weight: bold;
+}
+
+.departamento {
+    font-size: 12px;
+    color: #666;
+}
+
+.controles {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+input.cantidad {
+    width: 70px;
+    text-align: center;
 }
