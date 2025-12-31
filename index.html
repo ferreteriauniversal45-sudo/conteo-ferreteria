@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Librería Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -31,9 +30,24 @@
     <h3>Catálogo</h3>
     <div id="catalogo" class="lista"></div>
 
-    <h3>Conteo</h3>
+    <h3>Conteo Total</h3>
     <div id="conteo" class="lista"></div>
 
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3>Agregar Conteo</h3>
+        <p id="modalProducto"></p>
+
+        <input type="number" id="cantidadInput" min="1" placeholder="Cantidad">
+
+        <div class="panel">
+            <button onclick="confirmarCantidad()">Aceptar</button>
+            <button class="secondary" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
