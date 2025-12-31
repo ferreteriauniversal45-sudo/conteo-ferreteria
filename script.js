@@ -27,11 +27,11 @@ function renderCatalogo() {
             const div = document.createElement("div");
             div.className = "item";
             div.innerHTML = `
-                <span>
-                    <strong>${codigo}</strong> - ${p.producto}
-                    <br><small>${p.departamento}</small>
-                </span>
-                <button onclick="sumar('${codigo}')">+</button>
+                <div>
+                    <div class="codigo">${codigo} - ${p.producto}</div>
+                    <div class="departamento">${p.departamento}</div>
+                </div>
+                <button class="small" onclick="sumar('${codigo}')">+</button>
             `;
             contenedor.appendChild(div);
         });
@@ -45,13 +45,20 @@ function renderConteo() {
         const div = document.createElement("div");
         div.className = "item";
         div.innerHTML = `
-            <span>
-                <strong>${codigo}</strong> - ${item.producto}
-                <br>Cantidad: ${item.cantidad}
-            </span>
+            <div>
+                <div class="codigo">${codigo} - ${item.producto}</div>
+                <div class="departamento">${item.departamento}</div>
+            </div>
             <div class="controles">
-                <button onclick="restar('${codigo}')">-</button>
-                <button onclick="sumar('${codigo}')">+</button>
+                <button class="small secondary" onclick="restar('${codigo}')">-</button>
+                <input
+                    class="cantidad"
+                    type="number"
+                    min="0"
+                    value="${item.cantidad}"
+                    onchange="setCantidad('${codigo}', this.value)"
+                >
+                <button class="small" onclick="sumar('${codigo}')">+</button>
             </div>
         `;
         contenedor.appendChild(div);
@@ -75,6 +82,16 @@ function restar(codigo) {
     if (!conteo[codigo]) return;
     conteo[codigo].cantidad--;
     if (conteo[codigo].cantidad <= 0) delete conteo[codigo];
+    guardar();
+}
+
+function setCantidad(codigo, valor) {
+    const cantidad = parseInt(valor);
+    if (isNaN(cantidad) || cantidad <= 0) {
+        delete conteo[codigo];
+    } else {
+        conteo[codigo].cantidad = cantidad;
+    }
     guardar();
 }
 
@@ -107,5 +124,6 @@ function exportarExcel() {
     const ws = XLSX.utils.aoa_to_sheet(data);
     XLSX.utils.book_append_sheet(wb, ws, "Conteo");
 
-    XLSX.writeFile(wb, "conteo.xlsx");
+    const fecha = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, `conteo_${fecha}.xlsx`);
 }
