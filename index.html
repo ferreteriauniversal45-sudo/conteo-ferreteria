@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <title>Conteo de Productos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Librería para exportar Excel -->
+    <!-- Librería Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
+
+<div class="container">
 
     <h2>Conteo de Productos</h2>
 
     <input
         type="text"
         id="busqueda"
-        placeholder="Buscar por código o nombre"
+        placeholder="Buscar por código, producto o departamento"
         autocomplete="off"
     >
 
     <div class="panel">
         <button onclick="exportarExcel()">Exportar Excel</button>
-        <button onclick="limpiarConteo()">Limpiar Conteo</button>
+        <button class="danger" onclick="limpiarConteo()">Limpiar Conteo</button>
     </div>
 
     <h3>Catálogo</h3>
@@ -31,6 +34,8 @@
     <h3>Conteo</h3>
     <div id="conteo" class="lista"></div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
